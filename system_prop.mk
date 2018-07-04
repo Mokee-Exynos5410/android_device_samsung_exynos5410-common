@@ -8,7 +8,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Camera
 PRODUCT_PROPERTY_OVERRIDES += \
-    camera2.portability.force_api=1
+    camera2.portability.force_api=1 \
+    camera.disable_treble=true
 
 # Graphics
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -24,7 +25,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Media
 PRODUCT_PROPERTY_OVERRIDES += \
     media.stagefright.legacyencoder=1 \
-    media.stagefright.less-secure=1
+    media.stagefright.less-secure=1 \
+    persist.bluetooth.disableabsvol=true \
+    persist.media.treble_omx=false
 
 # NFC
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -32,12 +35,20 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # OTA
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.ota.romname=los-14.1 \
+    ro.ota.romname=MK71.2 \
     ro.ota.version=$(shell date +'%Y%m%d')
 
 # OTG
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.isUsbOtgEnabled=true
+
+# Sdcardfs
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.sys.sdcardfs=true
+
+# Open GL
+PRODUCT_PROPERTY_OVERRIDES += \
+    debug.hwui.use_buffer_age=false
 
 # WiFi
 PRODUCT_PROPERTY_OVERRIDES += \

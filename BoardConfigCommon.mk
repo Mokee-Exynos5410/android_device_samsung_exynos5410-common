@@ -19,14 +19,13 @@ COMMON_PATH := device/samsung/exynos5410-common
 
 BOARD_VENDOR := samsung
 
-TARGET_UNOFFICIAL_BUILD_ID := WEEKLY
-
 # Include path
 TARGET_SPECIFIC_HEADER_PATH += $(COMMON_PATH)/include
 
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := universal5410
 TARGET_NO_BOOTLOADER := true
+TARGET_NO_RADIOIMAGE := true
 
 # Platform
 TARGET_BOARD_PLATFORM := exynos5
@@ -46,6 +45,9 @@ BOARD_KERNEL_PAGESIZE := 2048
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := arm-eabi-
 TARGET_KERNEL_SOURCE := kernel/samsung/exynos5410
 KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/arm/arm-eabi-4.8/bin
+BOARD_CUSTOM_BOOTIMG := true
+BOARD_CUSTOM_BOOTIMG_MK := hardware/samsung/mkbootimg.mk
+BOARD_KERNEL_IMAGE_NAME :=zImage
 
 # ANT+
 BOARD_ANT_WIRELESS_DEVICE := "vfs-prerelease"
@@ -91,10 +93,11 @@ GREEN_LED_PATH := "/sys/class/leds/led_g/brightness"
 BLUE_LED_PATH := "/sys/class/leds/led_b/brightness"
 BACKLIGHT_PATH := "/sys/class/backlight/panel/brightness"
 CHARGING_ENABLED_PATH := "/sys/class/power_supply/battery/batt_lp_charging"
+BOARD_BATTERY_DEVICE_NAME := battery
 
-# CMHW
-BOARD_HARDWARE_CLASS := hardware/samsung/cmhw
-BOARD_HARDWARE_CLASS += device/samsung/exynos5410-common/cmhw
+# MKHW
+BOARD_HARDWARE_CLASS := hardware/samsung/mkhw
+BOARD_HARDWARE_CLASS += device/samsung/exynos5410-common/mkhw
 
 # Filesystems
 BLOCK_BASED_OTA := false
@@ -102,7 +105,7 @@ BOARD_BOOTIMAGE_PARTITION_SIZE := 8388608
 BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_CACHEIMAGE_PARTITION_SIZE := 2172649472
 BOARD_FLASH_BLOCK_SIZE := 4096
-BOARD_RECOVERYIMAGE_PARTITION_SIZE := 8388608
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 10485760
 BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 2898264064
 BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := ext4
@@ -123,6 +126,7 @@ BOARD_GLOBAL_CFLAGS += -DSURFACE_IS_BGR32
 HWUI_COMPILE_FOR_PERF := true
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 USE_OPENGL_RENDERER := true
+TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 
 # frameworks/native/services/surfaceflinger
 # Set the phase offset of the system's vsync event relative to the hardware
@@ -168,7 +172,7 @@ TARGET_OMX_LEGACY_RESCALING := true
 BOARD_NFC_HAL_SUFFIX := universal5410
 
 # Linker
-LINKER_FORCED_SHIM_LIBS += /system/lib/libril.so|libsamsung_symbols.so:/system/lib/omx/libOMX.Exynos.AVC.Encoder.so|libsamsung_symbols.so
+TARGET_LD_SHIM_LIBS += /system/lib/libril.so|libsamsung_symbols.so:/system/lib/omx/libOMX.Exynos.AVC.Encoder.so|libsamsung_symbols.so|libgutils.so
 
 # Unified PowerHAL
 TARGET_POWERHAL_VARIANT := samsung
@@ -193,7 +197,7 @@ endif
 BOARD_SECCOMP_POLICY := device/samsung/exynos5410-common/seccomp
 
 # SELinux
-BOARD_SEPOLICY_DIRS += \
+#BOARD_SEPOLICY_DIRS += \
     device/samsung/exynos5410-common/sepolicy
 
 # Sensors
@@ -212,6 +216,46 @@ WIFI_DRIVER_FW_PATH_PARAM        := "/sys/module/dhd/parameters/firmware_path"
 WIFI_DRIVER_FW_PATH_STA          := "/system/etc/wifi/bcmdhd_sta.bin"
 WIFI_DRIVER_FW_PATH_AP           := "/system/etc/wifi/bcmdhd_apsta.bin"
 WIFI_BAND                        := 802_11_ABG
+
+# Oreo
+# Samsung Gralloc
+TARGET_SAMSUNG_GRALLOC_EXTERNAL_USECASES := true
+
+# Scaler
+BOARD_USES_SCALER := true
+
+# Webkit
+ENABLE_WEBGL := true
+
+# Lower filesize by limiting dex-preoptimization
+WITH_DEXPREOPT := true
+WITH_DEXPREOPT_BOOT_IMG_ONLY := true
+
+# Disable journaling on system.img to save space
+BOARD_SYSTEMIMAGE_JOURNAL_SIZE := 0
+
+# Keymaster
+BOARD_USES_TRUST_KEYMASTER := true
+
+# HWCServices
+BOARD_USES_HWC_SERVICES := true
+
+# FIMG2D
+BOARD_USES_SKIA_FIMGAPI := true
+
+# OpenMAX Video
+BOARD_USE_STOREMETADATA := true
+BOARD_USE_METADATABUFFERTYPE := true
+BOARD_USE_DMA_BUF := true
+BOARD_USE_ANB_OUTBUF_SHARE := true
+BOARD_USE_IMPROVED_BUFFER := true
+BOARD_USE_NON_CACHED_GRAPHICBUFFER := true
+BOARD_USE_GSC_RGB_ENCODER := true
+BOARD_USE_CSC_HW := true
+BOARD_USE_QOS_CTRL := false
+BOARD_USE_S3D_SUPPORT := true
+BOARD_USE_VP8ENC_SUPPORT := true
+
 
 # inherit from the proprietary version
 -include vendor/samsung/exynos5410-common/BoardConfigVendor.mk

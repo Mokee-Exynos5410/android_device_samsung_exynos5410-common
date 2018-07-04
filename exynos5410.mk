@@ -17,7 +17,11 @@
 
 COMMON_PATH := device/samsung/exynos5410-common
 
-TARGET_UNOFFICIAL_BUILD_ID := WEEKLY
+# Gapps
+#GAPPS_VARIANT := nano
+#GAPPS_FORCE_MATCHING_DPI := true
+#WITH_DEXPREOPT := false
+#DONT_DEXPREOPT_PREBUILTS := true
 
 # overlays
 DEVICE_PACKAGE_OVERLAYS += $(COMMON_PATH)/overlay
@@ -28,6 +32,7 @@ DEVICE_PACKAGE_OVERLAYS += $(COMMON_PATH)/overlay
 # Boot animation
 TARGET_SCREEN_HEIGHT := 1920
 TARGET_SCREEN_WIDTH := 1080
+TARGET_BOOTANIMATION_HALF_RES := true
 
 # Ramdisk
 PRODUCT_PACKAGES += \
@@ -60,23 +65,31 @@ PRODUCT_PACKAGES += \
     audio.a2dp.default \
     audio.usb.default \
     audio.r_submix.default \
-    tinymix
+    tinymix \
+    android.hardware.audio@2.0-impl \
+    android.hardware.audio.effect@2.0-impl
 
 # Bluetooth
 PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/bluetooth/bt_did.conf:system/etc/bluetooth/bt_did.conf \
     $(COMMON_PATH)/bluetooth/bcm4335_prepatch.hcd:system/vendor/firmware/bcm4335_prepatch.hcd
 
+# Bluetooth HAL
+PRODUCT_PACKAGES += \
+    android.hardware.bluetooth@1.0-impl \
+    libbt-vendor
+
 # Camera
 PRODUCT_PACKAGES += \
-    camera.universal5410
+    camera.universal5410 \
+    libhwjpeg
 
 # Charger
 PRODUCT_PACKAGES += \
     charger_res_images
 
 # Samsung Doze
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     SamsungDoze
 
 # Filesystem management tools
@@ -84,23 +97,26 @@ PRODUCT_PACKAGES += \
     make_ext4fs \
     setup_fs
 
-# GPS
-PRODUCT_PACKAGES += \
-    libstlport
-
 # GPU
 PRODUCT_PACKAGES += \
     pvrsrvctl \
     libcorkscrew
 
-# HW composer
+# Graphics
 PRODUCT_PACKAGES += \
     hwcomposer.exynos5 \
     libion \
-    memtrack.exynos5
+    memtrack.exynos5 \
+    libgutils \
+    gralloc.exynos5 \
+    android.hardware.graphics.allocator@2.0-impl \
+    android.hardware.graphics.mapper@2.0-impl \
+    android.hardware.graphics.composer@2.1-impl \
+    android.hardware.memtrack@1.0-impl
 
 # IR
 PRODUCT_PACKAGES += \
+    android.hardware.ir@1.0-impl \
     consumerir.universal5410
 
 # Keylayouts
@@ -113,9 +129,14 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     keystore.exynos5
 
+# Keymaster
+PRODUCT_PACKAGES += \
+    android.hardware.keymaster@3.0-impl
+
 # Lights
 PRODUCT_PACKAGES += \
-    lights.universal5410
+    lights.universal5410 \
+    android.hardware.light@2.0-impl
 
 # Linker
 PRODUCT_PACKAGES += \
@@ -136,7 +157,11 @@ PRODUCT_PACKAGES += \
 
 # MobiCore
 PRODUCT_PACKAGES += \
-    mcDriverDaemon
+    mcDriverDaemon \
+    libMcClient \
+    libMcRegistry \
+    libPaApi \
+    libgdmcprov
 
 # NFC
 PRODUCT_PACKAGES += \
@@ -153,6 +178,11 @@ PRODUCT_COPY_FILES += \
     $(NFCEE_ACCESS_PATH):system/etc/nfcee_access.xml \
     $(COMMON_PATH)/nfc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf
 
+# Network tools
+PRODUCT_PACKAGES += \
+    libpcap \
+    tcpdump
+
 # OTA
 PRODUCT_PACKAGES += \
     OTAUpdates
@@ -165,27 +195,43 @@ PRODUCT_PACKAGES += \
     libOMX.Exynos.MPEG4.Encoder \
     libOMX.Exynos.VP8.Decoder \
     libOMX.Exynos.WMV.Decoder \
-    libstagefrighthw
+    libstagefrighthw \
+    libOMX.Exynos.MPEG2.Decoder
 
 # Power
 PRODUCT_PACKAGES += \
-    power.universal5410
+    power.universal5410 \
+    android.hardware.power@1.0-impl
 
 # Samsung
 PRODUCT_PACKAGES += \
     SamsungServiceMode
 
-# Wifi
+# Vibrator HAL
+PRODUCT_PACKAGES += \
+    android.hardware.vibrator@1.0-impl
+
+# USB HAL
+PRODUCT_PACKAGES += \
+	android.hardware.usb@1.0-service
+
+# WiFi HAL
 PRODUCT_PACKAGES += \
     hostapd \
     libnetcmdiface \
     macloader \
     wpa_supplicant \
-    wpa_supplicant.conf
+    wpa_supplicant.conf \
+    wificond
 
 PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/configs/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf \
     $(COMMON_PATH)/configs/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf
+
+# Sensors
+PRODUCT_PACKAGES += \
+    android.hardware.sensors@1.0-impl
+
 
 # Set default USB interface
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
@@ -224,12 +270,29 @@ ifeq ($(WITH_TWRP),true)
 # TWRP
 PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/recovery/etc/twrp.fstab:recovery/root/etc/twrp.fstab \
-    bionic/libc/zoneinfo/tzdata:recovery/root/system/usr/share/zoneinfo/tzdata
+    system/timezone/output_data/iana/tzdata:recovery/root/system/usr/share/zoneinfo/tzdata
 endif
 
+
+
+
+# Oreo
 # Device uses high-density artwork where available
 PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := xxhdpi
+
+# Dex2oat optimizations
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.sys.fw.dex2oat_thread_count=4
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.dex2oat-filter=speed \
+    dalvik.vm.dex2oat-swap=false
+
+# Legacy stagefright media
+PRODUCT_PROPERTY_OVERRIDES += \
+    media.stagefright.legacyencoder=true \
+    media.stagefright.less-secure=true
 
 # call dalvik heap config
 $(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-2048-dalvik-heap.mk)
@@ -239,3 +302,6 @@ $(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-2048-hwui
 
 # call the common proprietary setup
 $(call inherit-product, vendor/samsung/exynos5410-common/exynos5410-common-vendor.mk)
+
+# call Gapps config
+#$(call inherit-product, vendor/opengapps/build/opengapps-packages.mk)
