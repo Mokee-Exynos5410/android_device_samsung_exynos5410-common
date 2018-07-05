@@ -37,8 +37,8 @@ LOCAL_SHARED_LIBRARIES := \
 
 LOCAL_STATIC_LIBRARIES := \
     libarect \
-    libbase
-#   libminui
+    libbase  \
+    libminui
 
 LOCAL_CFLAGS += -DGAIA_FW_BETA
 
