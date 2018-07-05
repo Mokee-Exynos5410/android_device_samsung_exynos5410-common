@@ -214,7 +214,7 @@ BOARD_SECCOMP_POLICY := device/samsung/exynos5410-common/seccomp
 TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS := true
 TARGET_NO_SENSOR_PERMISSION_CHECK := true
 TARGET_LD_SHIM_LIBS += \
-    /system/vendor/lib/hw/camera.universal5410.so|libshim_camera.so \
+    /system/vendor/lib/hw/camera.vendor.universal5410.so|libshim_camera.so \
     /system/vendor/lib/libsec-ril.so|libshim_cutils_atomic.so
 
 # Wifi
