@@ -187,6 +187,7 @@ PRODUCT_PACKAGES += \
 
 # NFC
 PRODUCT_PACKAGES += \
+    android.hardware.nfc@1.0-impl \
     libnfc-nci \
     libnfc_nci_jni \
     nfc_nci.bcm2079x.universal5410 \
