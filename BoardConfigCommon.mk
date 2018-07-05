@@ -183,7 +183,7 @@ TARGET_OMX_LEGACY_RESCALING := true
 BOARD_NFC_HAL_SUFFIX := universal5410
 
 # Linker
-TARGET_LD_SHIM_LIBS += /system/lib/libril.so|libsamsung_symbols.so:/system/lib/omx/libOMX.Exynos.AVC.Encoder.so|libsamsung_symbols.so|libgutils.so
+TARGET_LD_SHIM_LIBS += /vendor/lib/libril.so|libsamsung_symbols.so:/vendor/lib/omx/libOMX.Exynos.AVC.Encoder.so|libsamsung_symbols.so|libgutils.so
 
 # Unified PowerHAL
 TARGET_POWERHAL_VARIANT := samsung
