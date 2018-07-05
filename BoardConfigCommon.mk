@@ -87,7 +87,6 @@ BOARD_USES_GSC_VIDEO := true
 BOARD_USES_NEON_BLITANTIH := true
 BOARD_USES_SKIA_FIMGAPI := true
 BOARD_USES_VIRTUAL_DISPLAY := true
-TARGET_HAS_LEGACY_CAMERA_HAL1 := true
 
 # Charger
 BOARD_CHARGER_SHOW_PERCENTAGE := true
@@ -268,7 +267,7 @@ BOARD_USE_S3D_SUPPORT := true
 BOARD_USE_VP8ENC_SUPPORT := true
 
 # Extended Filesystem Support
-TARGET_EXFAT_DRIVER := exfat
+TARGET_EXFAT_DRIVER := sdfat
 
 # inherit from the proprietary version
 -include vendor/samsung/exynos5410-common/BoardConfigVendor.mk
