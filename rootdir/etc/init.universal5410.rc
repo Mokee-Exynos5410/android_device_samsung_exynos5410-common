@@ -428,20 +428,20 @@ service watchdogd /sbin/watchdogd 10 20
     disabled
 
 # 3D init
-service pvrsrvctl /system/bin/pvrsrvctl
+service pvrsrvctl /vendor/bin/pvrsrvctl
     class core
     user root
     group root
     oneshot
 
 # Sensorhub service
-service sensorhubservice /system/bin/sensorhubservice
+service sensorhubservice /vendor/bin/sensorhubservice
     class main
     user system
     group input
 
 # service for TZPR provisioning version check app
-service scranton_RD /system/bin/scranton_RD
+service scranton_RD /vendor/bin/scranton_RD
      class main
      user root
      disabled
@@ -452,7 +452,14 @@ on property:sys.mobicoredaemon.enable=true
     start scranton_RD
 
 # MobiCore startup
-service mobicore /system/bin/mcDriverDaemon \
+    mkdir /data/app/mcRegistry 0775 system system
+    chmod 0700 /dev/mobicore
+    chmod 0666 /dev/mobicore-user
+    chmod 0660 /dev/s5p-smem
+    chown system system /dev/mobicore
+    chown radio system /dev/mobicore-user
+    chown system drmrpc /dev/s5p-smem
+service mobicore /vendor/bin/mcDriverDaemon \
     -r /system/vendor/firmware/mcRegistry/FFFFFFFF000000000000000000000001.drbin \
     -r /system/vendor/firmware/mcRegistry/ffffffffd0000000000000000000000a.tlbin
     class main
