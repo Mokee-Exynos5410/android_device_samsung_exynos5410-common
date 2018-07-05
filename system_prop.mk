@@ -8,8 +8,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Camera
 PRODUCT_PROPERTY_OVERRIDES += \
-    camera2.portability.force_api=1 \
-    camera.disable_treble=true
+    camera2.portability.force_api=1
+#    camera.disable_treble=true
 
 # Graphics
 PRODUCT_PROPERTY_OVERRIDES += \
