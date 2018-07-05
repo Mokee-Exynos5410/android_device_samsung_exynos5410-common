@@ -75,8 +75,8 @@ lib/libsensorhubcontext.so:vendor/lib/libsensorhubcontext.so
 lib/libsensorhubservice.so:vendor/lib/libsensorhubservice.so
 lib/hw/sensorhubs.universal5410.so:vendor/lib/hw/sensorhubs.universal5410.so
 
-# Widevine
-vendor/lib/mediadrm/libwvdrmengine.so
+# Widevine (Google angler - OPR6.170623.017)
+vendor/lib/mediadrm/libwvdrmengine.so|66ba66d047044f92eb0eada1faf6a5799ded90ab
 
 # Wifi
 etc/wifi/bcmdhd_apsta.bin:vendor/etc/wifi/bcmdhd_apsta.bin
