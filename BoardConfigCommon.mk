@@ -48,6 +48,7 @@ KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/arm/arm-ea
 BOARD_CUSTOM_BOOTIMG := true
 BOARD_CUSTOM_BOOTIMG_MK := hardware/samsung/mkbootimg.mk
 BOARD_KERNEL_IMAGE_NAME :=zImage
+LZMA_RAMDISK_TARGETS := recovery
 
 # ANT+
 BOARD_ANT_WIRELESS_DEVICE := "vfs-prerelease"
