@@ -66,8 +66,6 @@
     <bool name="config_enableBurnInProtection">true</bool>
 
     <!--  Oreo  -->
-    <!-- Is the battery LED intrusive? Used to decide if there should be a disable option -->
-    <bool name="config_intrusiveBatteryLed">true</bool>
 
     <!-- Certain sensor firmwares break with having a batch
          size set. By setting this to false, devices can opt
