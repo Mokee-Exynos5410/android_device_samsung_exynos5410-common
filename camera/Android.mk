@@ -31,12 +31,14 @@ LOCAL_SHARED_LIBRARIES := \
     libhidltransport \
     libsensor \
     libutils \
-    android.hidl.token@1.0-utils
+    android.hidl.token@1.0-utils \
+    android.hardware.graphics.bufferqueue@1.0 \
+    libdl
 
 LOCAL_STATIC_LIBRARIES := \
     libarect \
-    libbase \
-    libminui
+    libbase
+#   libminui
 
 LOCAL_CFLAGS += -DGAIA_FW_BETA
 
