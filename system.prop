@@ -1,0 +1,46 @@
+#
+# Common system.prop for exynos5410
+#
+
+# Bluetooth
+qcom.bluetooth.soc=rome
+
+# Camera
+camera2.portability.force_api=1
+#camera.disable_treble=true
+
+# Graphics
+debug.hwui.render_dirty_regions=false 
+debug.hwui.swap_with_damage=false 
+ro.bq.gpu_to_cpu_unsupported=1 
+ro.egl.destroy_after_detach=true 
+ro.hwui.disable_scissor_opt=true 
+ro.opengles.version=131072 
+ro.sf.lcd_density=480 
+ro.zygote.disable_gl_preload=1
+
+# Media
+media.stagefright.legacyencoder=true 
+media.stagefright.less-secure=true 
+persist.bluetooth.disableabsvol=true 
+persist.media.treble_omx=false
+
+# NFC
+nfc.app_log_level=2
+
+# OTG
+persist.sys.isUsbOtgEnabled=true
+
+# Sdcardfs
+ro.sys.sdcardfs=true
+
+# Open GL
+debug.hwui.use_buffer_age=false
+
+# WiFi
+wifi.interface=wlan0 
+wlan.wfd.hdcp=disable
+
+# Radio
+rild.libpath=/system/vendor/lib/libsec-ril.so
+
