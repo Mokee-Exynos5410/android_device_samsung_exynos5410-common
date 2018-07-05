@@ -119,7 +119,7 @@ TARGET_KERNEL_HAVE_EXFAT := true
 # Fonts
 EXTENDED_FONT_FOOTPRINT := true
 
-# HIDL
+# HIDL Manifest
 DEVICE_MANIFEST_FILE := $(COMMON_PATH)/manifest.xml
 DEVICE_MATRIX_FILE := $(COMMON_PATH)/compatibility_matrix.xml
 
