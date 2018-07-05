@@ -31,9 +31,6 @@ nfc.app_log_level=2
 # OTG
 persist.sys.isUsbOtgEnabled=true
 
-# Sdcardfs
-ro.sys.sdcardfs=true
-
 # Open GL
 debug.hwui.use_buffer_age=false
 
