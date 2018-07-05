@@ -18,9 +18,6 @@ vendor/lib/libsrv_init.so
 vendor/lib/libsrv_um.so
 vendor/lib/libusc.so
 
-# aptX (Moto griffin - NCLS25.86-11-4-6-5)
-vendor/lib/libaptX_encoder.so|b03772672144d4b750a5672c2922aded93bb0512
-
 # HWC
 vendor/lib/hw/gralloc.exynos5.so
 
@@ -100,3 +97,6 @@ etc/wifi/nvram_net.txt_muratafem1:vendor/etc/wifi/nvram_net.txt_muratafem1
 etc/wifi/nvram_net.txt_muratafem2:vendor/etc/wifi/nvram_net.txt_muratafem2
 etc/wifi/nvram_net.txt_semco3rd:vendor/etc/wifi/nvram_net.txt_semco3rd
 etc/wifi/nvram_net.txt_semcosh:vendor/etc/wifi/nvram_net.txt_semcosh
+
+# STLport (Camera/RIL) - local compile LineageOS/external/stlport@984b8432
+vendor/lib/libstlport.so|0be0a0d13e12fbf95d97d309dcbc25d3f969a469
