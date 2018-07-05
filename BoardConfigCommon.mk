@@ -124,8 +124,8 @@ TARGET_KERNEL_HAVE_EXFAT := true
 EXTENDED_FONT_FOOTPRINT := true
 
 # HIDL
-DEVICE_MANIFEST_FILE := $(LOCAL_PATH)/manifest.xml
-DEVICE_MATRIX_FILE := $(LOCAL_PATH)/compatibility_matrix.xml
+DEVICE_MANIFEST_FILE := $(COMMON_PATH)/manifest.xml
+DEVICE_MATRIX_FILE := $(COMMON_PATH)/compatibility_matrix.xml
 
 # Graphics
 BOARD_EGL_SYSTEMUI_PBSIZE_HACK := true
