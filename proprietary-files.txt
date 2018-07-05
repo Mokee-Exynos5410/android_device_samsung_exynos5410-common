@@ -2,6 +2,7 @@
 lib/libexynoscamera.so:vendor/lib/libexynoscamera.so
 lib/libhwjpeg.so:vendor/lib/libhwjpeg.so
 lib/libvdis.so:vendor/lib/libvdis.so
+lib/hw/camera.universal5410.so:vendor/lib/hw/camera.universal5410.so
 
 # Graphics
 vendor/lib/egl/libEGL_POWERVR_SGX544_115.so
