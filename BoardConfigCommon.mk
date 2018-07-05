@@ -184,6 +184,9 @@ TARGET_LD_SHIM_LIBS += /system/lib/libril.so|libsamsung_symbols.so:/system/lib/o
 # Unified PowerHAL
 TARGET_POWERHAL_VARIANT := samsung
 
+# Properties
+TARGET_SYSTEM_PROP += device/samsung/exynos5410-common/system.prop
+
 # Recovery
 BOARD_HAS_DOWNLOAD_MODE := true
 BOARD_HAS_LARGE_FILESYSTEM := true
