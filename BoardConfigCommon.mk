@@ -39,9 +39,6 @@ TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_VARIANT := cortex-a15
 
-# ADB Legacy Interface
-TARGET_USES_LEGACY_ADB_INTERFACE := true
-
 # Binder API version
 TARGET_USES_64_BIT_BINDER := true
 
@@ -270,6 +267,8 @@ BOARD_USE_QOS_CTRL := false
 BOARD_USE_S3D_SUPPORT := true
 BOARD_USE_VP8ENC_SUPPORT := true
 
+# Extended Filesystem Support
+TARGET_EXFAT_DRIVER := exfat
 
 # inherit from the proprietary version
 -include vendor/samsung/exynos5410-common/BoardConfigVendor.mk
