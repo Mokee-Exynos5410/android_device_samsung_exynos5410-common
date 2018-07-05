@@ -68,14 +68,14 @@
     <!--  Oreo  -->
     <!-- Is the battery LED intrusive? Used to decide if there should be a disable option -->
     <bool name="config_intrusiveBatteryLed">true</bool>
-    
-    <!-- Boolean to enable STK functionality on Samsung phones -->
-    <bool name="config_samsung_stk">true</bool>
 
     <!-- Certain sensor firmwares break with having a batch
          size set. By setting this to false, devices can opt
          out of setting a batch size, which fixes rotation. -->
     <bool name="config_useDefaultBatchingForAccel">false</bool>
+
+    <!-- Boolean to enable STK functionality on Samsung phones -->
+    <bool name="config_samsung_stk">true</bool>
 
     <!-- Configuartion to support SIM contact batch operation-->
     <bool name="config_sim_phonebook_batch_operation">false</bool>.
