@@ -82,7 +82,10 @@ PRODUCT_PACKAGES += \
 # Camera
 PRODUCT_PACKAGES += \
     camera.universal5410 \
-    libhwjpeg
+    libshim_camera \
+    libhwjpeg \
+    libstlport \
+    libxml2
 
 # Charger
 PRODUCT_PACKAGES += \
