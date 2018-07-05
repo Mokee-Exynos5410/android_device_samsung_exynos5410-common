@@ -466,10 +466,10 @@ service mobicore /vendor/bin/mcDriverDaemon \
     user drmrpc
     group drmrpc
 
-service battery_charger /sbin/healthd -c
+service charger /sbin/charger -c
     class charger
     critical
-    seclabel u:r:healthd:s0
+    seclabel u:r:charger:s0
 
 on property:sys.boot_completed=1
 # Disable pulsing led on boot complete
