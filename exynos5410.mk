@@ -225,7 +225,7 @@ PRODUCT_PACKAGES += \
     android.hardware.power@1.0-impl
 
 # Samsung
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     SamsungServiceMode
 
 # Vibrator HAL
