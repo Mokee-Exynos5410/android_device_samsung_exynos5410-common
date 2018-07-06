@@ -222,7 +222,8 @@ PRODUCT_PACKAGES += \
 # Power
 PRODUCT_PACKAGES += \
     power.universal5410 \
-    android.hardware.power@1.0-impl
+    android.hardware.power@1.0-impl \
+    libbt-vendor
 
 # Samsung
 #PRODUCT_PACKAGES += \
