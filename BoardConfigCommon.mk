@@ -42,6 +42,17 @@ TARGET_CPU_VARIANT := cortex-a15
 # Binder API version
 TARGET_USES_64_BIT_BINDER := true
 
+#Bionic
+TARGET_LD_SHIM_LIBS := \
+    /system/lib/libsec-ril.so|libsamsung_symbols.so \
+
+TARGET_LD_SHIM_LIBS += \
+	/system/lib/omx/libOMX.SEC.AVC.Decoder.so|/system/lib/libui_shim.so \
+	/system/lib/omx/libOMX.SEC.AVC.Encoder.so|/system/lib/libui_shim.so \
+	/system/lib/omx/libOMX.SEC.MV4.Decoder.so|/system/lib/libui_shim.so \
+	/system/lib/omx/libOMX.SEC.MV4.Encoder.so|/system/lib/libui_shim.so \
+	/system/lib/omx/libOMX.SEC.WMV.Decoder.so|/system/lib/libui_shim.so
+
 # Kernel
 BOARD_KERNEL_BASE := 0x10000000
 BOARD_KERNEL_PAGESIZE := 2048
