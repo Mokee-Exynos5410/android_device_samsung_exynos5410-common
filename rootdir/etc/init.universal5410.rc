@@ -1136,7 +1136,7 @@ service mobicore /vendor/bin/mcDriverDaemon \
     user drmrpc
     group drmrpc
 
-service charger /sbin/charger -c
+service charger /charger
     class charger
     critical
     seclabel u:r:charger:s0
