@@ -48,6 +48,10 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
     ro.debuggable=1 \
     ro.secure=0
 
+# Advanced display
+PRODUCT_PACKAGES += \
+    AdvancedDisplay
+
 # ANT+
 PRODUCT_PACKAGES += \
     AntHalService \
