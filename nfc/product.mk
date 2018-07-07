@@ -21,7 +21,7 @@ PRODUCT_PACKAGES += \
     Tag
 
 PRODUCT_COPY_FILES += \
-    device/samsung/jsglte/nfc/nfcee_access.xml:system/etc/nfcee_access.xml
+    device/samsung/exynos5410-common/nfc/nfcee_access.xml:system/etc/nfcee_access.xml
 
 # NFC Permissions
 PRODUCT_COPY_FILES += \
