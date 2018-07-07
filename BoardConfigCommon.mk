@@ -190,7 +190,7 @@ TARGET_OMX_LEGACY_RESCALING := true
 
 # NFC
 BOARD_NFC_HAL_SUFFIX := universal5410
-include $(DEVICE_PATH)/nfc/bcm2079x/board.mk
+include $(COMMON_PATH)/nfc/bcm2079x/board.mk
 
 # Linker
 TARGET_LD_SHIM_LIBS += /vendor/lib/libril.so|libsamsung_symbols.so:/vendor/lib/omx/libOMX.Exynos.AVC.Encoder.so|libsamsung_symbols.so|libgutils.so

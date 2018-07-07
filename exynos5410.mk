@@ -25,7 +25,7 @@ PRODUCT_PACKAGES += \
 
 # overlays
 DEVICE_PACKAGE_OVERLAYS += $(COMMON_PATH)/overlay
-DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay-mokee
+DEVICE_PACKAGE_OVERLAYS += $(COMMON_PATH)/overlay-mokee
 
 # Boot animation
 TARGET_SCREEN_HEIGHT := 1920
@@ -129,7 +129,7 @@ PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/keylayout/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
     $(COMMON_PATH)/keylayout/sec_touchkey.kl:system/usr/keylayout/sec_touchkey.kl \
     $(COMMON_PATH)/idc/Synaptics_HID_TouchPad.idc:system/usr/idc/Synaptics_HID_TouchPad.idc \
-    $(LOCAL_PATH)/keylayout/synaptics_rmi4_i2c.kl:system/usr/keylayout/synaptics_rmi4_i2c.kl
+    $(COMMON_PATH)/keylayout/synaptics_rmi4_i2c.kl:system/usr/keylayout/synaptics_rmi4_i2c.kl
 
 # Keystore
 PRODUCT_PACKAGES += \
