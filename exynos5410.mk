@@ -175,7 +175,7 @@ PRODUCT_PACKAGES += \
     libgdmcprov
 
 # NFC
-$(call inherit-product, device/samsung/jsglte/nfc/bcm2079x/product.mk)
+$(call inherit-product, device/samsung/exynos5410-common/nfc/bcm2079x/product.mk)
 
 # Network tools
 PRODUCT_PACKAGES += \
