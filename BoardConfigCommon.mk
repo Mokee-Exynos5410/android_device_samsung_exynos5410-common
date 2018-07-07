@@ -30,6 +30,7 @@ TARGET_NO_RADIOIMAGE := true
 # Platform
 TARGET_BOARD_PLATFORM := exynos5
 TARGET_SLSI_VARIANT := cm
+TARGET_SOC := exynos5410
 
 # Architecture
 TARGET_ARCH := arm
@@ -38,6 +39,9 @@ TARGET_ARCH_VARIANT_CPU := cortex-a15
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_VARIANT := cortex-a15
+TARGET_CPU_SMP := true
+ARCH_ARM_HAVE_TLS_REGISTER := true
+ENABLE_CPUSETS := true
 
 # Binder API version
 TARGET_USES_64_BIT_BINDER := true
@@ -70,6 +74,9 @@ BCM_BLUETOOTH_MANTA_BUG := true
 # Boot animation
 TARGET_BOOTANIMATION_PRELOAD := true
 TARGET_BOOTANIMATION_TEXTURE_CACHE := true
+TARGET_OTA_ASSERT_DEVICE := ja3g,ja3gxx
+TARGET_NO_BOOTLOADER := true
+TARGET_NO_RADIOIMAGE := true
 
 # Camera
 BOARD_CAMERA_BACK_ROTATION := 90
@@ -188,6 +195,9 @@ IR_HAL_SUFFIX := universal5410
 # Media
 TARGET_OMX_LEGACY_RESCALING := true
 
+# Device Tree
+BOARD_USES_DT := true
+
 # NFC
 BOARD_NFC_HAL_SUFFIX := universal5410
 include $(COMMON_PATH)/nfc/bcm2079x/board.mk
@@ -198,6 +208,10 @@ TARGET_LD_SHIM_LIBS += /vendor/lib/libril.so|libsamsung_symbols.so:/vendor/lib/o
 # Legacy BLOB Support
 TARGET_LD_SHIM_LIBS += \
     /system/vendor/lib/hw/camera.vendor.universal5410.so|libshim_camera.so
+
+# Shim
+TARGET_LD_SHIM_LIBS := \
+    /system/lib/libsec-ril.so|libsec-ril_shim.so
 
 # Unified PowerHAL
 TARGET_POWERHAL_VARIANT := samsung
@@ -227,6 +241,9 @@ BOARD_SECCOMP_POLICY := device/samsung/exynos5410-common/seccomp
 # SELinux
 #BOARD_SEPOLICY_DIRS += \
     device/samsung/exynos5410-common/sepolicy
+
+# temp hack
+BOARD_KERNEL_CMDLINE := androidboot.selinux=permissive
 
 # Sensors
 TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS := true
@@ -282,12 +299,16 @@ BOARD_USE_METADATABUFFERTYPE := true
 BOARD_USE_DMA_BUF := true
 BOARD_USE_ANB_OUTBUF_SHARE := true
 BOARD_USE_IMPROVED_BUFFER := true
-BOARD_USE_NON_CACHED_GRAPHICBUFFER := true
 BOARD_USE_GSC_RGB_ENCODER := true
-BOARD_USE_CSC_HW := true
-BOARD_USE_QOS_CTRL := false
 BOARD_USE_S3D_SUPPORT := true
 BOARD_USE_VP8ENC_SUPPORT := true
+BOARD_USE_HEVCDEC_SUPPORT := true
+BOARD_USE_GSC_RGB_ENCODER := true
+BOARD_USE_ENCODER_RGBINPUT_SUPPORT := true
+TARGET_OMX_LEGACY_RESCALING := true
+
+# HEVC support in libvideocodec
+BOARD_USE_HEVC_HWIP := true
 
 # Extended Filesystem Support
 TARGET_EXFAT_DRIVER := sdfat
