@@ -17,11 +17,11 @@
 
 COMMON_PATH := device/samsung/exynos5410-common
 
-# Gapps
-#GAPPS_VARIANT := nano
-#GAPPS_FORCE_MATCHING_DPI := true
-#WITH_DEXPREOPT := false
-#DONT_DEXPREOPT_PREBUILTS := true
+$(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
+
+# Flat device tree for boot image
+PRODUCT_PACKAGES += \
+    dtbhtoolExynos
 
 # overlays
 DEVICE_PACKAGE_OVERLAYS += $(COMMON_PATH)/overlay
@@ -30,29 +30,17 @@ DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay-mokee
 # Boot animation
 TARGET_SCREEN_HEIGHT := 1920
 TARGET_SCREEN_WIDTH := 1080
-TARGET_BOOTANIMATION_HALF_RES := true
 
 # Ramdisk
 PRODUCT_PACKAGES += \
     init.universal5410.rc \
     init.universal5410.usb.rc \
-    init.universal5410.wifi.rc
+    init.universal5410.wifi.rc \
+    init.samsung
 
 # Recovery
 PRODUCT_PACKAGES += \
     init.recovery.universal5410.rc
-
-# ADB Debugging
-ADDITIONAL_DEFAULT_PROPERTIES += \
-    ro.adb.secure=0 \
-    ro.debuggable=1 \
-    ro.secure=0
-
-# ANT+
-PRODUCT_PACKAGES += \
-    AntHalService \
-    com.dsi.ant.antradio_library \
-    libantradio
 
 # Audio
 PRODUCT_COPY_FILES += \
@@ -84,7 +72,6 @@ PRODUCT_PACKAGES += \
     camera.universal5410 \
     libshim_camera \
     libhwjpeg \
-    libstlport \
     libxml2
 
 # Charger
@@ -99,6 +86,10 @@ PRODUCT_PACKAGES += \
 # Samsung Doze
 #PRODUCT_PACKAGES += \
     SamsungDoze
+
+# FlipFlap
+PRODUCT_PACKAGES += \
+    FlipFlap
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
@@ -131,11 +122,14 @@ PRODUCT_PACKAGES += \
     android.hardware.ir@1.0-impl \
     consumerir.universal5410
 
-# Keylayouts
+# Keylayouts and Input device
 PRODUCT_COPY_FILES += \
+    $(COMMON_PATH)/keylayout/atmel_mxt_ts.kl:system/usr/keylayout/atmel_mxt_ts.kl \
     $(COMMON_PATH)/idc/sec_touchscreen.idc:system/usr/idc/sec_touchscreen.idc \
     $(COMMON_PATH)/keylayout/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
-    $(COMMON_PATH)/keylayout/sec_touchkey.kl:system/usr/keylayout/sec_touchkey.kl
+    $(COMMON_PATH)/keylayout/sec_touchkey.kl:system/usr/keylayout/sec_touchkey.kl \
+    $(COMMON_PATH)/idc/Synaptics_HID_TouchPad.idc:system/usr/idc/Synaptics_HID_TouchPad.idc \
+    $(LOCAL_PATH)/keylayout/synaptics_rmi4_i2c.kl:system/usr/keylayout/synaptics_rmi4_i2c.kl
 
 # Keystore
 PRODUCT_PACKAGES += \
@@ -153,6 +147,11 @@ PRODUCT_PACKAGES += \
 # Linker
 PRODUCT_PACKAGES += \
     libsamsung_symbols
+
+# IPv6 tethering
+PRODUCT_PACKAGES += \
+    ebtables \
+    ethertypes
 
 # Media profile
 PRODUCT_COPY_FILES += \
@@ -176,29 +175,12 @@ PRODUCT_PACKAGES += \
     libgdmcprov
 
 # NFC
-PRODUCT_PACKAGES += \
-    android.hardware.nfc@1.0-impl \
-    libnfc-nci \
-    libnfc_nci_jni \
-    nfc_nci.bcm2079x.universal5410 \
-    NfcNci \
-    Tag \
-    com.android.nfc_extras
-
-# NFCEE access control + configuration
-NFCEE_ACCESS_PATH := $(COMMON_PATH)/nfc/nfcee_access.xml
-PRODUCT_COPY_FILES += \
-    $(NFCEE_ACCESS_PATH):system/etc/nfcee_access.xml \
-    $(COMMON_PATH)/nfc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf
+$(call inherit-product, device/samsung/jsglte/nfc/bcm2079x/product.mk)
 
 # Network tools
 PRODUCT_PACKAGES += \
     libpcap \
     tcpdump
-
-# OTA
-PRODUCT_PACKAGES += \
-    OTAUpdates
 
 # OMX
 PRODUCT_PACKAGES += \
@@ -215,10 +197,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     power.universal5410 \
     android.hardware.power@1.0-impl
-
-# Samsung
-#PRODUCT_PACKAGES += \
-    SamsungServiceMode
 
 # Vibrator HAL
 PRODUCT_PACKAGES += \
@@ -287,10 +265,6 @@ PRODUCT_COPY_FILES += \
     system/timezone/output_data/iana/tzdata:recovery/root/system/usr/share/zoneinfo/tzdata
 endif
 
-
-
-
-# Oreo
 # Device uses high-density artwork where available
 PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := xxhdpi
@@ -303,16 +277,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.dex2oat-filter=speed \
     dalvik.vm.dex2oat-swap=false
 
-# Legacy stagefright media
-PRODUCT_PROPERTY_OVERRIDES += \
-    media.stagefright.legacyencoder=true \
-    media.stagefright.less-secure=true
-
 # call dalvik heap config
-$(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-2048-dalvik-heap.mk)
+$(call inherit-product, frameworks/native/build/phone-xxhdpi-2048-dalvik-heap.mk)
 
 # call the common proprietary setup
 $(call inherit-product, vendor/samsung/exynos5410-common/exynos5410-common-vendor.mk)
-
-# call Gapps config
-#$(call inherit-product, vendor/opengapps/build/opengapps-packages.mk)

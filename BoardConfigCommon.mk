@@ -42,7 +42,7 @@ TARGET_CPU_VARIANT := cortex-a15
 # Binder API version
 TARGET_USES_64_BIT_BINDER := true
 
-#Bionic
+# Bionic
 TARGET_LD_SHIM_LIBS := \
     /system/lib/libsec-ril.so|libsamsung_symbols.so \
 
@@ -56,16 +56,10 @@ TARGET_LD_SHIM_LIBS += \
 # Kernel
 BOARD_KERNEL_BASE := 0x10000000
 BOARD_KERNEL_PAGESIZE := 2048
-TARGET_KERNEL_CROSS_COMPILE_PREFIX := arm-eabi-
 TARGET_KERNEL_SOURCE := kernel/samsung/exynos5410
-KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/arm/arm-eabi-4.8/bin
+BOARD_KERNEL_IMAGE_NAME :=zImage
 BOARD_CUSTOM_BOOTIMG := true
 BOARD_CUSTOM_BOOTIMG_MK := hardware/samsung/mkbootimg.mk
-BOARD_KERNEL_IMAGE_NAME :=zImage
-LZMA_RAMDISK_TARGETS := recovery
-
-# ANT+
-BOARD_ANT_WIRELESS_DEVICE := "vfs-prerelease"
 
 # Bluetooth
 BOARD_CUSTOM_BT_CONFIG := $(COMMON_PATH)/bluetooth/libbt_vndcfg.txt
@@ -76,7 +70,6 @@ BCM_BLUETOOTH_MANTA_BUG := true
 # Boot animation
 TARGET_BOOTANIMATION_PRELOAD := true
 TARGET_BOOTANIMATION_TEXTURE_CACHE := true
-TARGET_BOOTANIMATION_HALF_RES := true
 
 # Camera
 BOARD_CAMERA_BACK_ROTATION := 90
@@ -107,7 +100,17 @@ GREEN_LED_PATH := "/sys/class/leds/led_g/brightness"
 BLUE_LED_PATH := "/sys/class/leds/led_b/brightness"
 BACKLIGHT_PATH := "/sys/class/backlight/panel/brightness"
 CHARGING_ENABLED_PATH := "/sys/class/power_supply/battery/batt_lp_charging"
-BOARD_BATTERY_DEVICE_NAME := battery
+BOARD_BATTERY_DEVICE_NAME := "battery"
+
+# Dexpreopt
+ifeq ($(HOST_OS),linux)
+  ifneq ($(TARGET_BUILD_VARIANT),eng)
+    ifeq ($(WITH_DEXPREOPT),)
+      WITH_DEXPREOPT := true
+      WITH_DEXPREOPT_BOOT_IMG_AND_SYSTEM_SERVER_ONLY := true
+    endif
+  endif
+endif
 
 # MKHW
 BOARD_HARDWARE_CLASS := hardware/samsung/mkhw
@@ -117,9 +120,8 @@ BOARD_HARDWARE_CLASS += device/samsung/exynos5410-common/mkhw
 BLOCK_BASED_OTA := false
 BOARD_BOOTIMAGE_PARTITION_SIZE := 8388608
 BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_CACHEIMAGE_PARTITION_SIZE := 2172649472
 BOARD_FLASH_BLOCK_SIZE := 4096
-BOARD_RECOVERYIMAGE_PARTITION_SIZE := 9553936
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 9807872
 BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 2898264064
 BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := ext4
@@ -188,9 +190,14 @@ TARGET_OMX_LEGACY_RESCALING := true
 
 # NFC
 BOARD_NFC_HAL_SUFFIX := universal5410
+include $(DEVICE_PATH)/nfc/bcm2079x/board.mk
 
 # Linker
 TARGET_LD_SHIM_LIBS += /vendor/lib/libril.so|libsamsung_symbols.so:/vendor/lib/omx/libOMX.Exynos.AVC.Encoder.so|libsamsung_symbols.so|libgutils.so
+
+# Legacy BLOB Support
+TARGET_LD_SHIM_LIBS += \
+    /system/vendor/lib/hw/camera.vendor.universal5410.so|libshim_camera.so
 
 # Unified PowerHAL
 TARGET_POWERHAL_VARIANT := samsung

@@ -18,4 +18,6 @@
     <string name="additional_system_update" translatable="false">com.ota.updates</string>
     <string name="additional_system_update_menu" 
 translatable="false">com.ota.updates.activities.MainActivity</string>
+    <!-- Volume Rocker Wake -->
+    <bool name="config_show_volumeRockerWake">true</bool>
 </resources>

@@ -2,6 +2,10 @@
 # Common system.prop for exynos5410
 #
 
+# Art
+dalvik.vm.dex2oat-swap=false
+dalvik.vm.heapminfree=2m
+
 # Bluetooth
 qcom.bluetooth.soc=rome
 
