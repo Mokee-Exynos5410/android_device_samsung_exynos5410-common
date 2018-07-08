@@ -14,6 +14,9 @@ on init
     symlink /sys/devices/platform/s5p-ehci/ehci_power /dev/ehci_power
 
 on fs
+    wait /dev/devices/platform/${ro.boot.bootdevice}
+    symlink /dev/devices/platform/${ro.boot.bootdevice} /dev/devices/bootdevice
+
     mount_all /fstab.universal5410
 
 on post-fs
