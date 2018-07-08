@@ -33,6 +33,9 @@ nfc.app_log_level=2
 # OTG
 persist.sys.isUsbOtgEnabled=true
 
+# Tethering
+net.tethering.noprovisioning=true
+
 # Open GL
 debug.hwui.use_buffer_age=false
 
