@@ -17,8 +17,6 @@
 
 COMMON_PATH := device/samsung/exynos5410-common
 
-BOARD_VENDOR := samsung
-
 # Include path
 TARGET_SPECIFIC_HEADER_PATH += $(COMMON_PATH)/include
 
@@ -26,11 +24,13 @@ TARGET_SPECIFIC_HEADER_PATH += $(COMMON_PATH)/include
 TARGET_BOOTLOADER_BOARD_NAME := universal5410
 TARGET_NO_BOOTLOADER := true
 TARGET_NO_RADIOIMAGE := true
+TARGET_OTA_ASSERT_DEVICE := ja3g,ja3gxx
 
 # Platform
 TARGET_BOARD_PLATFORM := exynos5
 TARGET_SLSI_VARIANT := cm
 TARGET_SOC := exynos5410
+BOARD_VENDOR := samsung
 
 # Architecture
 TARGET_ARCH := arm
@@ -40,17 +40,15 @@ TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_VARIANT := cortex-a15
 TARGET_CPU_SMP := true
-ARCH_ARM_HAVE_TLS_REGISTER := true
-ENABLE_CPUSETS := true
 
 # Binder API version
 TARGET_USES_64_BIT_BINDER := true
 
 # Bionic
-TARGET_LD_SHIM_LIBS := \
+#TARGET_LD_SHIM_LIBS := \
     /system/lib/libsec-ril.so|libsamsung_symbols.so \
 
-TARGET_LD_SHIM_LIBS += \
+#TARGET_LD_SHIM_LIBS += \
 	/system/lib/omx/libOMX.SEC.AVC.Decoder.so|/system/lib/libui_shim.so \
 	/system/lib/omx/libOMX.SEC.AVC.Encoder.so|/system/lib/libui_shim.so \
 	/system/lib/omx/libOMX.SEC.MV4.Decoder.so|/system/lib/libui_shim.so \
@@ -74,9 +72,6 @@ BCM_BLUETOOTH_MANTA_BUG := true
 # Boot animation
 TARGET_BOOTANIMATION_PRELOAD := true
 TARGET_BOOTANIMATION_TEXTURE_CACHE := true
-TARGET_OTA_ASSERT_DEVICE := ja3g,ja3gxx
-TARGET_NO_BOOTLOADER := true
-TARGET_NO_RADIOIMAGE := true
 
 # Camera
 BOARD_CAMERA_BACK_ROTATION := 90
@@ -124,9 +119,11 @@ BOARD_HARDWARE_CLASS := hardware/samsung/mkhw
 BOARD_HARDWARE_CLASS += device/samsung/exynos5410-common/mkhw
 
 # Filesystems
+BOARD_HAS_LARGE_FILESYSTEM := true
 BLOCK_BASED_OTA := false
 BOARD_BOOTIMAGE_PARTITION_SIZE := 8388608
 BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_CACHEIMAGE_PARTITION_SIZE := 2172649472
 BOARD_FLASH_BLOCK_SIZE := 4096
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 9807872
 BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE := ext4
@@ -194,9 +191,6 @@ IR_HAL_SUFFIX := universal5410
 
 # Media
 TARGET_OMX_LEGACY_RESCALING := true
-
-# Device Tree
-BOARD_USES_DT := true
 
 # NFC
 BOARD_NFC_HAL_SUFFIX := universal5410
@@ -294,24 +288,23 @@ BOARD_USES_HWC_SERVICES := true
 BOARD_USES_SKIA_FIMGAPI := true
 
 # OpenMAX Video
-BOARD_USE_STOREMETADATA := true
-BOARD_USE_METADATABUFFERTYPE := true
-BOARD_USE_DMA_BUF := true
-BOARD_USE_ANB_OUTBUF_SHARE := true
-BOARD_USE_IMPROVED_BUFFER := true
-BOARD_USE_GSC_RGB_ENCODER := true
-BOARD_USE_S3D_SUPPORT := true
-BOARD_USE_VP8ENC_SUPPORT := true
-BOARD_USE_HEVCDEC_SUPPORT := true
-BOARD_USE_GSC_RGB_ENCODER := true
-BOARD_USE_ENCODER_RGBINPUT_SUPPORT := true
-TARGET_OMX_LEGACY_RESCALING := true
+#BOARD_USE_STOREMETADATA := true
+#BOARD_USE_METADATABUFFERTYPE := true
+#BOARD_USE_DMA_BUF := true
+#BOARD_USE_ANB_OUTBUF_SHARE := true
+#BOARD_USE_IMPROVED_BUFFER := true
+#BOARD_USE_NON_CACHED_GRAPHICBUFFER := true
+#BOARD_USE_GSC_RGB_ENCODER := true
+#BOARD_USE_CSC_HW := true
+#BOARD_USE_QOS_CTRL := false
+#BOARD_USE_S3D_SUPPORT := true
+#BOARD_USE_VP8ENC_SUPPORT := true
 
 # HEVC support in libvideocodec
-BOARD_USE_HEVC_HWIP := true
+#BOARD_USE_HEVC_HWIP := true
 
 # Extended Filesystem Support
-TARGET_EXFAT_DRIVER := sdfat
+#TARGET_EXFAT_DRIVER := sdfat
 
 # inherit from the proprietary version
 -include vendor/samsung/exynos5410-common/BoardConfigVendor.mk

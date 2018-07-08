@@ -19,10 +19,6 @@ COMMON_PATH := device/samsung/exynos5410-common
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
-# Flat device tree for boot image
-PRODUCT_PACKAGES += \
-    dtbhtoolExynos
-
 # overlays
 DEVICE_PACKAGE_OVERLAYS += $(COMMON_PATH)/overlay
 DEVICE_PACKAGE_OVERLAYS += $(COMMON_PATH)/overlay-mokee
@@ -101,7 +97,7 @@ PRODUCT_PACKAGES += \
     pvrsrvctl \
     libcorkscrew
 
-#GPS
+# GPS
 PRODUCT_PACKAGES += \
     android.hardware.gnss@1.0-impl
 
@@ -214,7 +210,8 @@ PRODUCT_PACKAGES += \
     macloader \
     wpa_supplicant \
     wpa_supplicant.conf \
-    wificond
+    wificond \
+    wifilogd
 
 PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/configs/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf \
@@ -228,6 +225,14 @@ PRODUCT_PACKAGES += \
 # Set default USB interface
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     persist.sys.usb.config=mtp
+
+# IO Scheduler
+PRODUCT_PROPERTY_OVERRIDES += \
+    sys.io.scheduler=bfq
+
+PRODUCT_PACKAGES += \
+    libnetcmdiface \
+    wifiloader
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -277,8 +282,17 @@ PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.dex2oat-filter=speed \
     dalvik.vm.dex2oat-swap=false
 
+# Legacy stagefright media
+PRODUCT_PROPERTY_OVERRIDES += \
+    media.stagefright.legacyencoder=true \
+    media.stagefright.less-secure=true
+
 # call dalvik heap config
 $(call inherit-product, frameworks/native/build/phone-xxhdpi-2048-dalvik-heap.mk)
 
 # call the common proprietary setup
 $(call inherit-product, vendor/samsung/exynos5410-common/exynos5410-common-vendor.mk)
+
+# call Samsung LSI board support package
+$(call inherit-product, hardware/samsung_slsi-cm/exynos5/exynos5.mk)
+$(call inherit-product, hardware/samsung_slsi-cm/exynos5410/exynos5410.mk)
