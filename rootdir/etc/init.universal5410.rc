@@ -430,13 +430,6 @@ service watchdogd /sbin/watchdogd 10 20
     seclabel u:r:watchdogd:s0
     disabled
 
-# 3D init
-service pvrsrvctl /system/bin/pvrsrvctl
-    class core
-    user root
-    group root
-    oneshot
-
 # Sensorhub service
 service sensorhubservice /system/bin/sensorhubservice
     class main
@@ -453,6 +446,13 @@ service scranton_RD /system/bin/scranton_RD
 # start for TZPR provisioning version check app
 on property:sys.mobicoredaemon.enable=true
     start scranton_RD
+
+# 3D init
+service pvrsrvctl /system/bin/pvrsrvctl
+    class core
+    user root
+    group root
+    oneshot
 
 # MobiCore startup
 service mobicore /system/bin/mcDriverDaemon \

@@ -93,6 +93,7 @@ BOARD_USES_GSC_VIDEO := true
 BOARD_USES_NEON_BLITANTIH := true
 BOARD_USES_SKIA_FIMGAPI := true
 BOARD_USES_VIRTUAL_DISPLAY := true
+BOARD_GLOBAL_CFLAGS += -DSAMSUNG_DVFS
 
 # Charger
 BOARD_CHARGER_SHOW_PERCENTAGE := true
@@ -103,6 +104,9 @@ BLUE_LED_PATH := "/sys/class/leds/led_b/brightness"
 BACKLIGHT_PATH := "/sys/class/backlight/panel/brightness"
 CHARGING_ENABLED_PATH := "/sys/class/power_supply/battery/batt_lp_charging"
 BOARD_BATTERY_DEVICE_NAME := "battery"
+
+# Force the screenshot path to CPU consumer
+TARGET_FORCE_SCREENSHOT_CPU_PATH := true
 
 # Dexpreopt
 ifeq ($(HOST_OS),linux)
