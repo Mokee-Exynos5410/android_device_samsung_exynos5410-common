@@ -2,16 +2,12 @@
 # Common system.prop for exynos5410
 #
 
-# Art
-dalvik.vm.dex2oat-swap=false
-dalvik.vm.heapminfree=2m
-
 # Bluetooth
 qcom.bluetooth.soc=rome
 
 # Camera
 camera2.portability.force_api=1
-#camera.disable_treble=true
+camera.disable_treble=true
 
 # Graphics
 debug.hwui.render_dirty_regions=false 
@@ -24,25 +20,13 @@ ro.sf.lcd_density=480
 ro.zygote.disable_gl_preload=1
 
 # Media
-persist.bluetooth.disableabsvol=true 
-persist.media.treble_omx=false
-
-# NFC
-nfc.app_log_level=2
+media.stagefright.legacyencoder=1
+media.stagefright.less-secure=1
 
 # OTG
 persist.sys.isUsbOtgEnabled=true
 
-# Tethering
-net.tethering.noprovisioning=true
-
-# Open GL
-debug.hwui.use_buffer_age=false
-
 # WiFi
 wifi.interface=wlan0 
 wlan.wfd.hdcp=disable
-
-# Radio
-rild.libpath=/system/vendor/lib/libsec-ril.so
 

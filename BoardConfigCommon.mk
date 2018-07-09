@@ -23,14 +23,10 @@ TARGET_SPECIFIC_HEADER_PATH += $(COMMON_PATH)/include
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := universal5410
 TARGET_NO_BOOTLOADER := true
-TARGET_NO_RADIOIMAGE := true
-TARGET_OTA_ASSERT_DEVICE := ja3g,ja3gxx
 
 # Platform
 TARGET_BOARD_PLATFORM := exynos5
 TARGET_SLSI_VARIANT := cm
-TARGET_SOC := exynos5410
-BOARD_VENDOR := samsung
 
 # Architecture
 TARGET_ARCH := arm
@@ -39,29 +35,17 @@ TARGET_ARCH_VARIANT_CPU := cortex-a15
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_VARIANT := cortex-a15
-TARGET_CPU_SMP := true
 
 # Binder API version
 TARGET_USES_64_BIT_BINDER := true
 
-# Bionic
-#TARGET_LD_SHIM_LIBS := \
-    /system/lib/libsec-ril.so|libsamsung_symbols.so \
-
-#TARGET_LD_SHIM_LIBS += \
-	/system/lib/omx/libOMX.SEC.AVC.Decoder.so|/system/lib/libui_shim.so \
-	/system/lib/omx/libOMX.SEC.AVC.Encoder.so|/system/lib/libui_shim.so \
-	/system/lib/omx/libOMX.SEC.MV4.Decoder.so|/system/lib/libui_shim.so \
-	/system/lib/omx/libOMX.SEC.MV4.Encoder.so|/system/lib/libui_shim.so \
-	/system/lib/omx/libOMX.SEC.WMV.Decoder.so|/system/lib/libui_shim.so
-
 # Kernel
 BOARD_KERNEL_BASE := 0x10000000
 BOARD_KERNEL_PAGESIZE := 2048
+TARGET_KERNEL_CROSS_COMPILE_PREFIX := arm-eabi-
 TARGET_KERNEL_SOURCE := kernel/samsung/exynos5410
+KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/arm/arm-eabi-4.8/bin
 BOARD_KERNEL_IMAGE_NAME :=zImage
-BOARD_CUSTOM_BOOTIMG := true
-BOARD_CUSTOM_BOOTIMG_MK := hardware/samsung/mkbootimg.mk
 
 # Bluetooth
 BOARD_CUSTOM_BT_CONFIG := $(COMMON_PATH)/bluetooth/libbt_vndcfg.txt
@@ -72,6 +56,7 @@ BCM_BLUETOOTH_MANTA_BUG := true
 # Boot animation
 TARGET_BOOTANIMATION_PRELOAD := true
 TARGET_BOOTANIMATION_TEXTURE_CACHE := true
+TARGET_BOOTANIMATION_HALF_RES := true
 
 # Camera
 BOARD_CAMERA_BACK_ROTATION := 90
@@ -93,7 +78,7 @@ BOARD_USES_GSC_VIDEO := true
 BOARD_USES_NEON_BLITANTIH := true
 BOARD_USES_SKIA_FIMGAPI := true
 BOARD_USES_VIRTUAL_DISPLAY := true
-BOARD_GLOBAL_CFLAGS += -DSAMSUNG_DVFS
+TARGET_HAS_LEGACY_CAMERA_HAL1 := true
 
 # Charger
 BOARD_CHARGER_SHOW_PERCENTAGE := true
@@ -103,33 +88,18 @@ GREEN_LED_PATH := "/sys/class/leds/led_g/brightness"
 BLUE_LED_PATH := "/sys/class/leds/led_b/brightness"
 BACKLIGHT_PATH := "/sys/class/backlight/panel/brightness"
 CHARGING_ENABLED_PATH := "/sys/class/power_supply/battery/batt_lp_charging"
-BOARD_BATTERY_DEVICE_NAME := "battery"
-
-# Force the screenshot path to CPU consumer
-TARGET_FORCE_SCREENSHOT_CPU_PATH := true
-
-# Dexpreopt
-ifeq ($(HOST_OS),linux)
-  ifneq ($(TARGET_BUILD_VARIANT),eng)
-    ifeq ($(WITH_DEXPREOPT),)
-      WITH_DEXPREOPT := true
-      WITH_DEXPREOPT_BOOT_IMG_AND_SYSTEM_SERVER_ONLY := true
-    endif
-  endif
-endif
 
 # MKHW
 BOARD_HARDWARE_CLASS := hardware/samsung/mkhw
 BOARD_HARDWARE_CLASS += device/samsung/exynos5410-common/mkhw
 
 # Filesystems
-BOARD_HAS_LARGE_FILESYSTEM := true
 BLOCK_BASED_OTA := false
 BOARD_BOOTIMAGE_PARTITION_SIZE := 8388608
 BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_CACHEIMAGE_PARTITION_SIZE := 2172649472
 BOARD_FLASH_BLOCK_SIZE := 4096
-BOARD_RECOVERYIMAGE_PARTITION_SIZE := 9807872
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 9888608
 BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 2898264064
 BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := ext4
@@ -142,7 +112,6 @@ EXTENDED_FONT_FOOTPRINT := true
 
 # HIDL Manifest
 DEVICE_MANIFEST_FILE := $(COMMON_PATH)/manifest.xml
-DEVICE_MATRIX_FILE := $(COMMON_PATH)/compatibility_matrix.xml
 
 # Graphics
 BOARD_EGL_SYSTEMUI_PBSIZE_HACK := true
@@ -154,7 +123,6 @@ BOARD_GLOBAL_CFLAGS += -DSURFACE_IS_BGR32
 HWUI_COMPILE_FOR_PERF := true
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 USE_OPENGL_RENDERER := true
-TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 
 # frameworks/native/services/surfaceflinger
 # Set the phase offset of the system's vsync event relative to the hardware
@@ -198,18 +166,9 @@ TARGET_OMX_LEGACY_RESCALING := true
 
 # NFC
 BOARD_NFC_HAL_SUFFIX := universal5410
-include $(COMMON_PATH)/nfc/bcm2079x/board.mk
 
 # Linker
-TARGET_LD_SHIM_LIBS += /vendor/lib/libril.so|libsamsung_symbols.so:/vendor/lib/omx/libOMX.Exynos.AVC.Encoder.so|libsamsung_symbols.so|libgutils.so
-
-# Legacy BLOB Support
-TARGET_LD_SHIM_LIBS += \
-    /system/vendor/lib/hw/camera.vendor.universal5410.so|libshim_camera.so
-
-# Shim
-TARGET_LD_SHIM_LIBS := \
-    /system/lib/libsec-ril.so|libsec-ril_shim.so
+LINKER_FORCED_SHIM_LIBS += /system/lib/libril.so|libsamsung_symbols.so:/system/lib/omx/libOMX.Exynos.AVC.Encoder.so|libsamsung_symbols.so
 
 # Unified PowerHAL
 TARGET_POWERHAL_VARIANT := samsung
@@ -246,69 +205,19 @@ BOARD_KERNEL_CMDLINE := androidboot.selinux=permissive
 # Sensors
 TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS := true
 TARGET_NO_SENSOR_PERMISSION_CHECK := true
-TARGET_LD_SHIM_LIBS += \
-    /system/vendor/lib/hw/camera.vendor.universal5410.so|libshim_camera.so \
-    /system/vendor/lib/libsec-ril.so|libshim_cutils_atomic.so
 
 # Wifi
-BOARD_HAVE_SAMSUNG_WIFI := true
-BOARD_WLAN_DEVICE := bcmdhd
-BOARD_HOSTAPD_DRIVER := NL80211
-BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
-BOARD_WPA_SUPPLICANT_DRIVER := NL80211
-BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
-WPA_SUPPLICANT_VERSION := VER_0_8_X
-WIFI_BAND := 802_11_ABG
-WIFI_DRIVER_MODULE_ARG      := "firmware_path=/vendor/etc/wifi/bcmdhd_sta.bin nvram_path=/vendor/etc/wifi/nvram_net.txt"
-WIFI_DRIVER_MODULE_AP_ARG   := "firmware_path=/vendor/etc/wifi/bcmdhd_apsta.bin nvram_path=/vendor/etc/wifi/nvram_net.txt"
-WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/dhd/parameters/firmware_path"
-WIFI_DRIVER_FW_PATH_STA     := "/vendor/etc/wifi/bcmdhd_sta.bin"
-WIFI_DRIVER_FW_PATH_AP      := "/vendor/etc/wifi/bcmdhd_apsta.bin"
-
-# Oreo
-# Samsung Gralloc
-TARGET_SAMSUNG_GRALLOC_EXTERNAL_USECASES := true
-
-# Scaler
-BOARD_USES_SCALER := true
-
-# Webkit
-ENABLE_WEBGL := true
-
-# Lower filesize by limiting dex-preoptimization
-WITH_DEXPREOPT := true
-WITH_DEXPREOPT_BOOT_IMG_ONLY := true
-
-# Disable journaling on system.img to save space
-BOARD_SYSTEMIMAGE_JOURNAL_SIZE := 0
-
-# Keymaster
-BOARD_USES_TRUST_KEYMASTER := true
-
-# HWCServices
-BOARD_USES_HWC_SERVICES := true
-
-# FIMG2D
-BOARD_USES_SKIA_FIMGAPI := true
-
-# OpenMAX Video
-#BOARD_USE_STOREMETADATA := true
-#BOARD_USE_METADATABUFFERTYPE := true
-#BOARD_USE_DMA_BUF := true
-#BOARD_USE_ANB_OUTBUF_SHARE := true
-#BOARD_USE_IMPROVED_BUFFER := true
-#BOARD_USE_NON_CACHED_GRAPHICBUFFER := true
-#BOARD_USE_GSC_RGB_ENCODER := true
-#BOARD_USE_CSC_HW := true
-#BOARD_USE_QOS_CTRL := false
-#BOARD_USE_S3D_SUPPORT := true
-#BOARD_USE_VP8ENC_SUPPORT := true
-
-# HEVC support in libvideocodec
-#BOARD_USE_HEVC_HWIP := true
-
-# Extended Filesystem Support
-#TARGET_EXFAT_DRIVER := sdfat
+BOARD_HAVE_SAMSUNG_WIFI          := true
+BOARD_WLAN_DEVICE                := bcmdhd
+WPA_SUPPLICANT_VERSION           := VER_0_8_X
+BOARD_WPA_SUPPLICANT_DRIVER      := NL80211
+BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_bcmdhd
+BOARD_HOSTAPD_DRIVER             := NL80211
+BOARD_HOSTAPD_PRIVATE_LIB        := lib_driver_cmd_bcmdhd
+WIFI_DRIVER_FW_PATH_PARAM        := "/sys/module/dhd/parameters/firmware_path"
+WIFI_DRIVER_FW_PATH_STA          := "/system/etc/wifi/bcmdhd_sta.bin"
+WIFI_DRIVER_FW_PATH_AP           := "/system/etc/wifi/bcmdhd_apsta.bin"
+WIFI_BAND                        := 802_11_ABG
 
 # inherit from the proprietary version
 -include vendor/samsung/exynos5410-common/BoardConfigVendor.mk

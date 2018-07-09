@@ -14,9 +14,6 @@ on init
     symlink /sys/devices/platform/s5p-ehci/ehci_power /dev/ehci_power
 
 on fs
-    wait /dev/block/platform/${ro.boot.bootdevice}
-    symlink /dev/block/platform/${ro.boot.bootdevice} /dev/block/bootdevice
-
     mount_all /fstab.universal5410
 
 on post-fs
@@ -77,10 +74,10 @@ on boot
 
 # Permissions for bluetooth
     setprop ro.bt.bdaddr_path "/efs/bluetooth/bt_addr"
-    chown bluetooth net_bt_stack ro.bt.bdaddr_path
+    chown bluetooth ro.bt.bdaddr_path
     chmod 0660 /sys/class/rfkill/rfkill0/state
-    chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/state
-    chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/type
+    chown bluetooth /sys/class/rfkill/rfkill0/state
+    chown bluetooth /sys/class/rfkill/rfkill0/type
 
 # Permissions for TouchScreen
     chmod 0660 /sys/class/sec/tsp/cmd
@@ -430,6 +427,13 @@ service watchdogd /sbin/watchdogd 10 20
     seclabel u:r:watchdogd:s0
     disabled
 
+# 3D init
+service pvrsrvctl /system/bin/pvrsrvctl
+    class core
+    user root
+    group root
+    oneshot
+
 # Sensorhub service
 service sensorhubservice /system/bin/sensorhubservice
     class main
@@ -447,13 +451,6 @@ service scranton_RD /system/bin/scranton_RD
 on property:sys.mobicoredaemon.enable=true
     start scranton_RD
 
-# 3D init
-service pvrsrvctl /system/bin/pvrsrvctl
-    class core
-    user root
-    group root
-    oneshot
-
 # MobiCore startup
 service mobicore /system/bin/mcDriverDaemon \
     -r /system/vendor/firmware/mcRegistry/FFFFFFFF000000000000000000000001.drbin \
@@ -462,7 +459,7 @@ service mobicore /system/bin/mcDriverDaemon \
     user drmrpc
     group drmrpc
 
-service battery_charger /charger
+service battery_charger charger
     class charger
     critical
     seclabel u:r:charger:s0

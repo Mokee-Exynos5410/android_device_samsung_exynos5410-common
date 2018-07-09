@@ -31,12 +31,23 @@ TARGET_SCREEN_WIDTH := 1080
 PRODUCT_PACKAGES += \
     init.universal5410.rc \
     init.universal5410.usb.rc \
-    init.universal5410.wifi.rc \
-    init.samsung
+    init.universal5410.wifi.rc
 
 # Recovery
 PRODUCT_PACKAGES += \
     init.recovery.universal5410.rc
+
+# ADB Debugging
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+    ro.adb.secure=0 \
+    ro.debuggable=1 \
+    ro.secure=0
+
+# ANT+
+PRODUCT_PACKAGES += \
+    AntHalService \
+    com.dsi.ant.antradio_library \
+    libantradio
 
 # Audio
 PRODUCT_COPY_FILES += \
@@ -66,26 +77,18 @@ PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-impl \
     camera.device@1.0-impl \
     camera.universal5410 \
-    libshim_camera \
-    libhwjpeg \
-    libxml2
 
 # Charger
 PRODUCT_PACKAGES += \
     charger_res_images
 
-# DRM
-PRODUCT_PACKAGES += \
-    android.hardware.drm@1.0-impl \
-    android.hardware.drm@1.0-service
-
 # Samsung Doze
 #PRODUCT_PACKAGES += \
     SamsungDoze
 
-# FlipFlap
+# GPS
 PRODUCT_PACKAGES += \
-    FlipFlap
+libstlport
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
@@ -106,8 +109,6 @@ PRODUCT_PACKAGES += \
     hwcomposer.exynos5 \
     libion \
     memtrack.exynos5 \
-    libgutils \
-    gralloc.exynos5 \
     android.hardware.graphics.allocator@2.0-impl \
     android.hardware.graphics.mapper@2.0-impl \
     android.hardware.graphics.composer@2.1-impl \
@@ -118,36 +119,20 @@ PRODUCT_PACKAGES += \
     android.hardware.ir@1.0-impl \
     consumerir.universal5410
 
-# Keylayouts and Input device
+# Keylayouts
 PRODUCT_COPY_FILES += \
-    $(COMMON_PATH)/keylayout/atmel_mxt_ts.kl:system/usr/keylayout/atmel_mxt_ts.kl \
     $(COMMON_PATH)/idc/sec_touchscreen.idc:system/usr/idc/sec_touchscreen.idc \
     $(COMMON_PATH)/keylayout/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
-    $(COMMON_PATH)/keylayout/sec_touchkey.kl:system/usr/keylayout/sec_touchkey.kl \
-    $(COMMON_PATH)/idc/Synaptics_HID_TouchPad.idc:system/usr/idc/Synaptics_HID_TouchPad.idc \
-    $(COMMON_PATH)/keylayout/synaptics_rmi4_i2c.kl:system/usr/keylayout/synaptics_rmi4_i2c.kl
+    $(COMMON_PATH)/keylayout/sec_touchkey.kl:system/usr/keylayout/sec_touchkey.kl
 
 # Keystore
 PRODUCT_PACKAGES += \
     keystore.exynos5
 
-# Keymaster
-PRODUCT_PACKAGES += \
-    android.hardware.keymaster@3.0-impl
-
 # Lights
 PRODUCT_PACKAGES += \
     lights.universal5410 \
     android.hardware.light@2.0-impl
-
-# Linker
-PRODUCT_PACKAGES += \
-    libsamsung_symbols
-
-# IPv6 tethering
-PRODUCT_PACKAGES += \
-    ebtables \
-    ethertypes
 
 # Media profile
 PRODUCT_COPY_FILES += \
@@ -164,19 +149,22 @@ PRODUCT_PACKAGES += \
 
 # MobiCore
 PRODUCT_PACKAGES += \
-    mcDriverDaemon \
-    libMcClient \
-    libMcRegistry \
-    libPaApi \
-    libgdmcprov
+    mcDriverDaemon
 
 # NFC
-$(call inherit-product, device/samsung/exynos5410-common/nfc/bcm2079x/product.mk)
-
-# Network tools
 PRODUCT_PACKAGES += \
-    libpcap \
-    tcpdump
+    libnfc-nci \
+    libnfc_nci_jni \
+    nfc_nci.bcm2079x.universal5410 \
+    NfcNci \
+    Tag \
+    com.android.nfc_extras
+
+# NFCEE access control + configuration
+NFCEE_ACCESS_PATH := $(COMMON_PATH)/nfc/nfcee_access.xml
+PRODUCT_COPY_FILES += \
+    $(NFCEE_ACCESS_PATH):system/etc/nfcee_access.xml \
+    $(COMMON_PATH)/nfc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf
 
 # OMX
 PRODUCT_PACKAGES += \
@@ -186,8 +174,7 @@ PRODUCT_PACKAGES += \
     libOMX.Exynos.MPEG4.Encoder \
     libOMX.Exynos.VP8.Decoder \
     libOMX.Exynos.WMV.Decoder \
-    libstagefrighthw \
-    libOMX.Exynos.MPEG2.Decoder
+    libstagefrighthw
 
 # Power
 PRODUCT_PACKAGES += \
@@ -225,14 +212,6 @@ PRODUCT_PACKAGES += \
 # Set default USB interface
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     persist.sys.usb.config=mtp
-
-# IO Scheduler
-PRODUCT_PROPERTY_OVERRIDES += \
-    sys.io.scheduler=bfq
-
-PRODUCT_PACKAGES += \
-    libnetcmdiface \
-    wifiloader
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -274,39 +253,11 @@ endif
 PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 
-# Dex2oat optimizations
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.sys.fw.dex2oat_thread_count=4
+# call dalvik heap config
+$(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-2048-dalvik-heap.mk)
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.dex2oat-filter=speed \
-    dalvik.vm.dex2oat-swap=false
-
-# call dalvik heap config and hwui config
-PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.heapstartsize=16m \
-    dalvik.vm.heapgrowthlimit=192m \
-    dalvik.vm.heapsize=512m \
-    dalvik.vm.heaptargetutilization=0.75 \
-    dalvik.vm.heapminfree=2m \
-    dalvik.vm.heapmaxfree=8m
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.hwui.texture_cache_size=72 \
-    ro.hwui.layer_cache_size=48 \
-    ro.hwui.r_buffer_cache_size=8 \
-    ro.hwui.path_cache_size=32 \
-    ro.hwui.gradient_cache_size=1 \
-    ro.hwui.drop_shadow_cache_size=6 \
-    ro.hwui.texture_cache_flushrate=0.4 \
-    ro.hwui.text_small_cache_width=1024 \
-    ro.hwui.text_small_cache_height=1024 \
-    ro.hwui.text_large_cache_width=2048 \
-    ro.hwui.text_large_cache_height=1024
+# call hwui memory config
+$(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-2048-hwui-memory.mk)
 
 # call the common proprietary setup
 $(call inherit-product, vendor/samsung/exynos5410-common/exynos5410-common-vendor.mk)
-
-# call Samsung LSI board support package
-$(call inherit-product, hardware/samsung_slsi-cm/exynos5/exynos5.mk)
-$(call inherit-product, hardware/samsung_slsi-cm/exynos5410/exynos5410.mk)
