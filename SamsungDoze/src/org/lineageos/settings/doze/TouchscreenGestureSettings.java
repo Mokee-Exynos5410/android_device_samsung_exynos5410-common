@@ -24,7 +24,7 @@ import android.support.v7.preference.Preference;
 import android.provider.Settings;
 import android.view.MenuItem;
 
-import org.lineageos.internal.util.ScreenType;
+import org.mokee.internal.util.ScreenType;
 
 public class TouchscreenGestureSettings extends PreferenceFragment {
 

@@ -41,7 +41,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     AntHalService \
     com.dsi.ant.antradio_library \
-    libantradio
+    libantradio \
+    antradio_app
 
 # Audio
 PRODUCT_COPY_FILES += \
@@ -278,3 +279,7 @@ $(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-2048-hwui
 
 # call the common proprietary setup
 $(call inherit-product, vendor/samsung/exynos5410-common/exynos5410-common-vendor.mk)
+# cal the exynos files
+$(call inherit-product, hardware/samsung_slsi-cm/exynos/Android.mk)
+$(call inherit-product, hardware/samsung_slsi-cm/exynos5/Android.mk)
+$(call inherit-product, hardware/samsung_slsi-cm/exynos5/exynos5.mk)
