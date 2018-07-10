@@ -37,12 +37,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     init.recovery.universal5410.rc
 
-# ADB Debugging
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    ro.adb.secure=0 \
-    ro.debuggable=1 \
-    ro.secure=0
-
 # ANT+
 PRODUCT_PACKAGES += \
     AntHalService \
@@ -62,6 +56,11 @@ PRODUCT_PACKAGES += \
     android.hardware.audio@2.0-impl \
     android.hardware.audio.effect@2.0-impl
 
+# Boot animation
+TARGET_BOOTANIMATION_HALF_RES := true
+TARGET_BOOTANIMATION_PRELOAD := true
+TARGET_BOOTANIMATION_TEXTURE_CACHE := true
+
 # Bluetooth
 PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/bluetooth/bt_did.conf:system/vendor/etc/bluetooth/bt_did.conf \
@@ -74,18 +73,27 @@ PRODUCT_PACKAGES += \
 
 # Camera
 PRODUCT_PACKAGES += \
-    android.hardware.camera.provider@2.4-impl \
+    android.hardware.camera.provider@2.4-impl-legacy \
     camera.device@1.0-impl \
-    camera.universal5410 \
+    camera.universal5410
 
 # Charger
 PRODUCT_PACKAGES += \
     charger_res_images
 
 # Samsung Doze
-#PRODUCT_PACKAGES += \
+PRODUCT_PACKAGES += \
     SamsungDoze
 
+
+# Hal
+PRODUCT_PACKAGES += \
+    AdvancedDisplay \
+    libhwconverter \
+    libs5pjpeg \
+    libfimg \
+    libsecion
+ 
 # GPS
 PRODUCT_PACKAGES += \
 libstlport
@@ -100,10 +108,6 @@ PRODUCT_PACKAGES += \
     pvrsrvctl \
     libcorkscrew
 
-# GPS
-PRODUCT_PACKAGES += \
-    android.hardware.gnss@1.0-impl
-
 # Graphics
 PRODUCT_PACKAGES += \
     hwcomposer.exynos5 \
@@ -117,6 +121,7 @@ PRODUCT_PACKAGES += \
 # IR
 PRODUCT_PACKAGES += \
     android.hardware.ir@1.0-impl \
+    android.hardware.ir@1.0-service \
     consumerir.universal5410
 
 # Keylayouts
@@ -185,6 +190,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.vibrator@1.0-impl
 
+# Keymaster
+PRODUCT_PACKAGES += \
+    android.hardware.keymaster@3.0-impl
+
 # USB HAL
 PRODUCT_PACKAGES += \
 	android.hardware.usb@1.0-service
@@ -208,6 +217,14 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.sensors@1.0-impl \
     sensors.universal5410
+
+# Dex2oat optimizations
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.sys.fw.dex2oat_thread_count=4
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.dex2oat-filter=speed \
+    dalvik.vm.dex2oat-swap=false
 
 # Set default USB interface
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \

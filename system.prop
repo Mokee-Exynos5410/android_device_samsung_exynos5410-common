@@ -2,6 +2,14 @@
 # Common system.prop for exynos5410
 #
 
+# ADB Debugging
+ro.adb.secure=0
+ro.debuggable=1
+ro.secure=0
+persist.service.adb.enable=1
+debug.generate-debug-info=1
+
+
 # Bluetooth
 qcom.bluetooth.soc=rome
 
@@ -22,6 +30,11 @@ ro.zygote.disable_gl_preload=1
 # Media
 media.stagefright.legacyencoder=1
 media.stagefright.less-secure=1
+persist.media.treble_omx=false
+persist.bluetooth.disableabsvol=true
+
+# Open GL
+debug.hwui.use_buffer_age=false 
 
 # OTG
 persist.sys.isUsbOtgEnabled=true

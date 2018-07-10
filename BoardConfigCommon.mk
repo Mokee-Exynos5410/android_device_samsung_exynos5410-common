@@ -28,6 +28,9 @@ TARGET_NO_BOOTLOADER := true
 TARGET_BOARD_PLATFORM := exynos5
 TARGET_SLSI_VARIANT := cm
 
+# ANT+
+BOARD_ANT_WIRELESS_DEVICE := "vfs-prerelease"
+
 # Architecture
 TARGET_ARCH := arm
 TARGET_ARCH_VARIANT := armv7-a-neon
@@ -37,7 +40,7 @@ TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_VARIANT := cortex-a15
 
 # Binder API version
-TARGET_USES_64_BIT_BINDER := true
+#TARGET_USES_64_BIT_BINDER := true
 
 # Kernel
 BOARD_KERNEL_BASE := 0x10000000
@@ -46,6 +49,8 @@ TARGET_KERNEL_CROSS_COMPILE_PREFIX := arm-eabi-
 TARGET_KERNEL_SOURCE := kernel/samsung/exynos5410
 KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/arm/arm-eabi-4.8/bin
 BOARD_KERNEL_IMAGE_NAME :=zImage
+BOARD_CUSTOM_BOOTIMG := true
+BOARD_CUSTOM_BOOTIMG_MK := hardware/samsung/mkbootimg.mk
 
 # Bluetooth
 BOARD_CUSTOM_BT_CONFIG := $(COMMON_PATH)/bluetooth/libbt_vndcfg.txt
@@ -54,8 +59,6 @@ BOARD_HAVE_BLUETOOTH_BCM := true
 BCM_BLUETOOTH_MANTA_BUG := true
 
 # Boot animation
-TARGET_BOOTANIMATION_PRELOAD := true
-TARGET_BOOTANIMATION_TEXTURE_CACHE := true
 TARGET_BOOTANIMATION_HALF_RES := true
 
 # Camera
@@ -111,7 +114,8 @@ TARGET_KERNEL_HAVE_EXFAT := true
 EXTENDED_FONT_FOOTPRINT := true
 
 # HIDL Manifest
-DEVICE_MANIFEST_FILE := $(COMMON_PATH)/manifest.xml
+DEVICE_MANIFEST_FILE := device/samsung/exynos5410-common/manifest.xml
+DEVICE_MATRIX_FILE := device/samsung/exynos5410-common/compatibility_matrix.xml
 
 # Graphics
 BOARD_EGL_SYSTEMUI_PBSIZE_HACK := true
@@ -168,7 +172,7 @@ TARGET_OMX_LEGACY_RESCALING := true
 BOARD_NFC_HAL_SUFFIX := universal5410
 
 # Linker
-LINKER_FORCED_SHIM_LIBS += /system/lib/libril.so|libsamsung_symbols.so:/system/lib/omx/libOMX.Exynos.AVC.Encoder.so|libsamsung_symbols.so
+TARGET_LD_SHIM_LIBS += /system/lib/libril.so|libsamsung_symbols.so:/system/lib/omx/libOMX.Exynos.AVC.Encoder.so|libsamsung_symbols.so
 
 # Unified PowerHAL
 TARGET_POWERHAL_VARIANT := samsung
@@ -196,7 +200,7 @@ endif
 BOARD_SECCOMP_POLICY := device/samsung/exynos5410-common/seccomp
 
 # SELinux
-#BOARD_SEPOLICY_DIRS += \
+BOARD_SEPOLICY_DIRS += \
     device/samsung/exynos5410-common/sepolicy
 
 # temp hack
@@ -218,6 +222,9 @@ WIFI_DRIVER_FW_PATH_PARAM        := "/sys/module/dhd/parameters/firmware_path"
 WIFI_DRIVER_FW_PATH_STA          := "/system/etc/wifi/bcmdhd_sta.bin"
 WIFI_DRIVER_FW_PATH_AP           := "/system/etc/wifi/bcmdhd_apsta.bin"
 WIFI_BAND                        := 802_11_ABG
+
+# USB
+TARGET_USES_LEGACY_ADB_INTERFACE := true
 
 # inherit from the proprietary version
 -include vendor/samsung/exynos5410-common/BoardConfigVendor.mk
