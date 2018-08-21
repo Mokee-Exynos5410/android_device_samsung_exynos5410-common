@@ -92,9 +92,9 @@ BLUE_LED_PATH := "/sys/class/leds/led_b/brightness"
 BACKLIGHT_PATH := "/sys/class/backlight/panel/brightness"
 CHARGING_ENABLED_PATH := "/sys/class/power_supply/battery/batt_lp_charging"
 
-# CMHW
-BOARD_HARDWARE_CLASS := hardware/samsung/cmhw
-BOARD_HARDWARE_CLASS += device/samsung/exynos5410-common/cmhw
+# MKHW
+BOARD_HARDWARE_CLASS := hardware/samsung/mkhw
+BOARD_HARDWARE_CLASS += device/samsung/exynos5410-common/mkhw
 
 # Filesystems
 BLOCK_BASED_OTA := false

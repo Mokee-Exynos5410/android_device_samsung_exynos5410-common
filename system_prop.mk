@@ -32,7 +32,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # OTA
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.ota.romname=los-14.1 \
+    ro.ota.romname=MK71.2 \
     ro.ota.version=$(shell date +'%Y%m%d')
 
 # OTG
