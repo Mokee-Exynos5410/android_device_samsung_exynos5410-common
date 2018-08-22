@@ -31,4 +31,11 @@
         "repository": "android_kernel_samsung_exynos5410",
         "target_path": "kernel/samsung/exynos5410"
     }
+        "repository": "android_packages_resources_devicesettings",
+        "target_path": "packages/resources/devicesettings"
+    {
+    }
+        "repository": "android_packages_apps_FlipFlap",
+        "target_path": "packages/apps/FlipFlap"
+    {
 ]

@@ -169,7 +169,10 @@ PRODUCT_PACKAGES += \
 
 # Samsung
 PRODUCT_PACKAGES += \
-    SamsungServiceMode
+    SamsungServiceMode \
+    SamsungDoze \
+    FlipFlap \
+    AdvancedDisplay
 
 # Wifi
 PRODUCT_PACKAGES += \
